@@ -1,10 +1,26 @@
 package com.fatec.student.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name =  "TBL_Student")
+
 public class Student {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Column (length = 40)
     private String name;
+
     private String email;
+
     private String course;
     
     public Integer getId() {
