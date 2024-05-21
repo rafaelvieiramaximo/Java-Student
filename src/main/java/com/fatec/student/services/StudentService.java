@@ -41,4 +41,17 @@ public class StudentService {
     public Student saveStudent(Student student){
         return this.studentRepository.save(student);
     }
+
+    public void update(int id, Student student){
+        try {
+            Student aux = studentRepository.getReferenceById(id);
+            aux.setCourse(student.getCourse());
+            aux.setName(student.getName());
+            aux.setEmail(student.getEmail());
+            this.studentRepository.save(aux);
+
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException ("Aluno inexistente no BD");
+        }
+    }
 }
