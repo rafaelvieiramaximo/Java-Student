@@ -8,19 +8,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name =  "TBL_Student")
+@Table(name =  "TBL_Students")
 
 public class Student {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column (length = 40)
     private String name;
 
     private String email;
-
+    
     private String course;
     
     public Integer getId() {
