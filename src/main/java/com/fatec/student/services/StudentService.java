@@ -54,12 +54,12 @@ public class StudentService {
         return StudentMapper.toDTO(this.studentRepository.save(student));
     }
 
-    public void update(int id, Student student) {
+    public void update(int id, StudentRequest request) {
         try {
             Student aux = studentRepository.getReferenceById(id);
-            aux.setCourse(student.getCourse());
-            aux.setName(student.getName());
-            aux.setEmail(student.getEmail());
+            aux.setCourse(request.course());
+            aux.setName(request.name());
+            aux.setEmail(request.email());
             this.studentRepository.save(aux);
 
         } catch (EntityNotFoundException e) {

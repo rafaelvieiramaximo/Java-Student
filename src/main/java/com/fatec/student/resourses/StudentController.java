@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fatec.student.dto.StudentRequest;
 import com.fatec.student.dto.StudentResponse;
-import com.fatec.student.entities.Student;
 
 @RestController
 @RequestMapping("students")
@@ -60,9 +59,9 @@ public class StudentController {
     }
 
     @PutMapping("{id}")
-    public void update (@PathVariable int id, @RequestBody Student student){
+    public ResponseEntity<Void> update (@PathVariable int id, @RequestBody StudentRequest student){
         this.studentService.update(id, student);
-
+        return ResponseEntity.ok().build();
     }
 
 }
