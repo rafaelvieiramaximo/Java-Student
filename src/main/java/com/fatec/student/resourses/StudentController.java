@@ -1,5 +1,6 @@
 package com.fatec.student.resourses;
 
+import java.net.URI;
 import java.util.List;
 
 import com.fatec.student.services.*;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fatec.student.dto.StudentRequest;
 import com.fatec.student.dto.StudentResponse;
 import com.fatec.student.entities.Student;
 
@@ -31,7 +34,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable int id) {
+    public ResponseEntity<StudentResponse> getStudentById(@PathVariable int id) {
         return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
@@ -45,8 +48,15 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student save (@RequestBody Student student){
-        return this.studentService.saveStudent(student);
+    public ResponseEntity<StudentResponse> save(@RequestBody StudentRequest student){
+        StudentResponse newStudent = this.studentService.save(student);
+        URI location = ServletUriComponentsBuilder
+                                                .fromCurrentRequest()
+                                                .path("/{id}")
+                                                .buildAndExpand(newStudent.id())
+                                                .toUri();
+
+        return ResponseEntity.created(location).body(newStudent);
     }
 
     @PutMapping("{id}")

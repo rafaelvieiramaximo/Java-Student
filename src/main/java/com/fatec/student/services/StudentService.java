@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fatec.student.dto.StudentRequest;
 import com.fatec.student.dto.StudentResponse;
 import com.fatec.student.entities.Student;
 import com.fatec.student.mappers.StudentMapper;
@@ -28,12 +29,14 @@ public class StudentService {
                                 .collect(Collectors.toList());
     }
 
-    public Student getStudentById(int id) {
+    public StudentResponse getStudentById(int id) {
 
-        return studentRepository.findById(id).orElseThrow(
+        Student student = studentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Aluno não cadastrado")
 
         );
+
+        return StudentMapper.toDTO(student);
 
     }
 
@@ -46,8 +49,9 @@ public class StudentService {
         }
     }
 
-    public Student saveStudent(Student student) {
-        return this.studentRepository.save(student);
+    public StudentResponse save(StudentRequest request) {
+        Student student = StudentMapper.toEntity(request);
+        return StudentMapper.toDTO(this.studentRepository.save(student));
     }
 
     public void update(int id, Student student) {
