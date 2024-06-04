@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fatec.student.dto.StudentResponse;
 import com.fatec.student.entities.Student;
 
 @RestController
@@ -25,7 +26,7 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<List<Student>> getStudents() {
+    public ResponseEntity<List<StudentResponse>> getStudents() {
         return ResponseEntity.ok(studentService.getStudents());
     }
 
